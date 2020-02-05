@@ -1,0 +1,52 @@
+gns3_server: "10.0.0.5"
+gns3_port: "3080"
+
+project_name: "test_lab1"
+
+nodes:
+  - appliance_name: "NAT"
+    os: "none"
+    instances:
+      - x: 150
+        y: 0
+  - appliance_name: "Ethernet switch"
+    os: "none"
+    instances:
+      - x: 0
+        y: 0
+  - appliance_name: "gns3-endhost"
+    os: "none"
+    instances:
+      - x: 0
+        y: -200
+        ip: "192.168.1.10 255.255.255.0"
+        gw: "192.168.1.1"
+#  - appliance_name: "Cisco NX-OSv 9000 7.0.3.I7.3"
+#    os: "nxos"
+#    instances:
+#      - x: -200
+ #       y: 0
+ #
+ #       ip: "192.168.1.11/24"
+  #      gw: "192.168.1.1"
+ #     - x: 200
+#        y: 0
+#        ip: "192.168.1.12/24"
+#        gw: "192.168.1.1"
+
+links:
+  -
+    - name: "Ethernetswitch-1"
+      interface: 1
+    - name: "NAT-1"
+      interface: 0
+  -
+    - name: "Ethernetswitch-1"
+      interface: 2
+    - name: "gns3-endhost-1"
+      interface: 0
+#  -
+#    - name: "Ethernetswitch-1"
+#      interface: 3
+#    - name: "CiscoCSR1000v16.7.1-1"
+#      interface: 0
