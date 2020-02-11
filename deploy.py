@@ -52,6 +52,8 @@ def create_project(name):
         print("Received HTTP error %d when creating the project! Exiting." % response.status_code)
         exit(1)
 
+    #print project ID
+    print("\t" * 1 + "project_id: " + body["project_id"])
 
 
 def assign_appliance_id():
@@ -115,8 +117,11 @@ def add_nodes():
             for instance in appliance["instances"]:
                 instance["node_id"] = next((item["node_id"] \
                                     for item in body if item["name"] == instance["name"]), None)
+                #print("node_id: " + instance["node_id"])
+                print("\t" * 1 + "name: " + instance["name"] + ", " + instance["node_id"])
                 instance["console"] = next((item["console"] \
                                     for item in body if item["name"] == instance["name"]), None)
+
     else:
         print("Received HTTP error %d when retrieving nodes! Exiting." % response.status_code)
         exit(1)
@@ -154,6 +159,15 @@ def add_links():
                "adapter_number": link[1]["adapter_number"], \
                "port_number": link[1]["port_number"]}]}
 
+        print("\t" * 1 + "creating link %s adapter %s port %s -- %s adapter %s port %s" % \
+                (link[0]["node_id"], link[0]["adapter_number"], link[0]["port_number"], \
+                link[1]["node_id"], link[1]["adapter_number"], link[1]["port_number"]))
+        #data2 = get_node_name(no)
+        #get node id
+        #send node id to add_nodes()
+        #in add_nodes get node_name based on the id
+        #return the node_name to add_links()
+
         data_json = dumps(data)
         response = post(url, data=data_json)
         if response.status_code != 201:
@@ -163,6 +177,7 @@ def add_links():
                   link[1]["node_id"], link[1]["adapter_number"], link[1]["port_number"]))
             exit(1)
 
+        #print("\t" * 1 + "links: " + data_json)
 
 
 def start_nodes():
@@ -179,12 +194,21 @@ def start_nodes():
         print("Received HTTP error %d when starting nodes! Exiting." % response.status_code)
         exit(1)
 
+def show_info():
+    print("hello")
+    
+    url = "http://%s:%s/v2/projects/%s/nodes" % \
+            (CONFIG["gns3_server"], CONFIG["gns3_port"], CONFIG["project_id"])
+    response = get(url)
+    body = response.json()
+    print(body)
+    #pprint.pprint(body, indent=4)
 
 
 if __name__ == "__main__":
 
     ### Loading config file
-    with open("topology_config.yml") as config_file:
+    with open("config.yml") as config_file:
         CONFIG = load(config_file)
 
     ### Create project and add its ID to the config
@@ -202,7 +226,15 @@ if __name__ == "__main__":
     ### Create links between the nodes
     print("Adding links")
     add_links()
+    
+    #print("Showing nodes info")
+    #show_info()
 
+    #show = input("show nodes & links info before running (Y/N)? ")
+    #print("hai " + show)
+    #if show == "y":
+  	#    show_info() 
+    
     ### Creating inventory file for Ansible
     #print("Generating Ansible inventory file")
     #build_ansible_hosts()

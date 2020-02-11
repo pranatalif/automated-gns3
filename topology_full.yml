@@ -1,0 +1,55 @@
+gns3_port: '3080'
+gns3_server: 10.0.0.5
+links:
+- - adapter_number: 0
+    interface: 1
+    name: Ethernetswitch-1
+    node_id: d7846d20-d8d6-48f5-99ec-5ccf837e428f
+    port_number: 1
+  - adapter_number: 0
+    interface: 0
+    name: NAT-1
+    node_id: 3097c887-c3a3-4dea-b3e5-072f958f2850
+    port_number: 0
+- - adapter_number: 0
+    interface: 2
+    name: Ethernetswitch-1
+    node_id: d7846d20-d8d6-48f5-99ec-5ccf837e428f
+    port_number: 2
+  - adapter_number: 0
+    interface: 0
+    name: gns3-endhost-1
+    node_id: 29625b28-f30b-4212-9c0b-a12b8e33ebc1
+    port_number: 0
+nodes:
+- appliance_id: df8f4ea9-33b7-3e96-86a2-c39bc9bb649c
+  appliance_name: NAT
+  instances:
+  - console: null
+    name: NAT-1
+    node_id: 3097c887-c3a3-4dea-b3e5-072f958f2850
+    x: 150
+    y: 0
+  os: none
+- appliance_id: 1966b864-93e7-32d5-965f-001384eec461
+  appliance_name: Ethernet switch
+  instances:
+  - console: 5001
+    name: Ethernetswitch-1
+    node_id: d7846d20-d8d6-48f5-99ec-5ccf837e428f
+    x: 0
+    y: 0
+  os: none
+- appliance_id: d38bd062-7be2-41f4-9bdd-f68f80dd4489
+  appliance_name: gns3-endhost
+  instances:
+  - console: 5002
+    gw: 192.168.1.1
+    ip: 192.168.1.10 255.255.255.0
+    name: gns3-endhost-1
+    node_id: 29625b28-f30b-4212-9c0b-a12b8e33ebc1
+    x: 0
+    y: -200
+  os: none
+project_id: e6d9bb2b-b74b-4c53-b4be-517cf82c80c3
+project_name: test_lab1
